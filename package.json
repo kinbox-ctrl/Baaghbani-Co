@@ -1,0 +1,19 @@
+{
+  "name": "baaghbani-co-coming-soon",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Coming soon page for Baaghbani & Co. — a little more green, a little more life.",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "compression": "^1.7.4",
+    "express": "^4.21.2"
+  }
+}
