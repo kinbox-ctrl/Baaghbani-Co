@@ -34,6 +34,12 @@ app.use(
   })
 );
 
+// The full site is kept in /future-site for launch. Set ENABLE_PREVIEW=true to view it at /preview/.
+if (process.env.ENABLE_PREVIEW === 'true') {
+  app.get('/preview', (req, res) => res.redirect(301, '/preview/'));
+  app.use('/preview', express.static(path.join(__dirname, 'future-site')));
+}
+
 app.get('/api/config', (req, res) => {
   res.json({ launchDate: LAUNCH_DATE || null, instagram: INSTAGRAM_URL });
 });

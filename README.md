@@ -22,6 +22,7 @@ Requires Node 18 or newer.
 | `LAUNCH_DATE`   | _(unset)_                     | ISO date, e.g. `2027-01-15T10:00:00+05:30`. Shows a countdown when set. |
 | `INSTAGRAM_URL` | `https://www.instagram.com/`  | Link for the Instagram icon                                             |
 | `DATA_DIR`      | `./data`                      | Where `subscribers.json` is written                                     |
+| `ENABLE_PREVIEW`| _(unset)_                     | Set to `true` to serve the saved full site at `/preview/`               |
 
 ## Sign-ups
 
@@ -29,13 +30,21 @@ Requires Node 18 or newer.
 
 On hosts with an ephemeral filesystem (Render free tier, Heroku, and similar), point `DATA_DIR` at a persistent disk, or swap `addSubscriber` in `server.js` for your mailing-list provider (Shopify customers, Klaviyo, Mailchimp).
 
+## The full site (saved for launch)
+
+The main page is a single full-screen "Coming soon" splash. The full homepage (hero, services, our story, newsletter) is kept in `future-site/` and is **not** public. To preview it, start the server with `ENABLE_PREVIEW=true` and open `/preview/`. At launch, move its files into `public/`.
+
 ## Structure
 
 ```
-server.js          Express server, config + subscribe API
-public/
-  index.html       The page
-  styles.css       Styles
-  app.js           Reveal animations, countdown, form handling
+server.js            Express server, config + subscribe API
+public/              What visitors see now
+  index.html         Coming soon splash
+  coming-soon.css
+  coming-soon.js     Countdown, form handling
   favicon.svg
+future-site/         Full homepage, saved for launch
+  index.html
+  styles.css
+  app.js
 ```
