@@ -126,7 +126,8 @@ em { font-family: var(--serif); font-style: italic; font-weight: 300; }
   font-size: clamp(84px, 19.5vw, 330px);
   line-height: 0.84; letter-spacing: -0.055em;
 }
-.mask { display: block; overflow: hidden; padding: 0.02em 0.06em 0.12em 0; margin-bottom: -0.12em; }
+/* generous bottom padding so descenders (the g) aren't clipped by the reveal mask */
+.mask { display: block; overflow: hidden; padding: 0.04em 0.08em 0.32em 0; margin-bottom: -0.32em; }
 .mask > span {
   display: inline-block; transform: translateY(110%);
   animation: rise 1.5s var(--ease) forwards; animation-delay: var(--rd, 0s);
