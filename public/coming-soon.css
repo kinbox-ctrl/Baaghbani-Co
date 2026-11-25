@@ -13,6 +13,7 @@
   --sans: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --pad: clamp(20px, 4.5vw, 72px);
+  --col-gap: clamp(28px, 5vw, 96px); /* gap between the two bottom columns */
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -55,6 +56,9 @@ em { font-family: var(--serif); font-style: italic; font-weight: 300; }
   position: fixed; z-index: 1; pointer-events: none;
   right: clamp(-60px, 4vw, 120px); bottom: -2vh;
   height: min(96vh, 900px); width: auto; aspect-ratio: 400 / 580;
+  /* fade the pot out so it doesn't run through the sign-up and footer text */
+  -webkit-mask-image: linear-gradient(to bottom, #000 52%, transparent 88%);
+          mask-image: linear-gradient(to bottom, #000 52%, transparent 88%);
 }
 .plant .sun { fill: var(--clay); opacity: 0.75; animation: sunrise 2.6s var(--ease) .3s both; }
 @keyframes sunrise { from { opacity: 0; transform: translateY(50px); } }
@@ -89,7 +93,7 @@ em { font-family: var(--serif); font-style: italic; font-weight: 300; }
 
 .header {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 26px var(--pad);
+  padding: clamp(16px, 3svh, 28px) var(--pad);
 }
 .brand { display: inline-flex; align-items: center; gap: 12px; color: var(--cream); text-decoration: none; }
 .brand__mark { width: 30px; height: 30px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
@@ -105,7 +109,7 @@ em { font-family: var(--serif); font-style: italic; font-weight: 300; }
 
 .main {
   display: flex; flex-direction: column; justify-content: center;
-  padding: clamp(20px, 4vh, 60px) var(--pad);
+  padding: clamp(4px, 1.2svh, 40px) var(--pad);
 }
 
 .eyebrow {
@@ -123,7 +127,9 @@ em { font-family: var(--serif); font-style: italic; font-weight: 300; }
 .giant {
   margin: 0;
   font-family: var(--serif); font-weight: 300;
-  font-size: clamp(84px, 19.5vw, 330px);
+  /* as big as the width allows, but capped by height so the page fits one screen */
+  font-size: clamp(84px, min(19.5vw, 25svh), 330px);
+  margin-left: -0.045em; /* optical: pull the C's side-bearing onto the left edge */
   line-height: 0.84; letter-spacing: -0.055em;
 }
 /* generous bottom padding so descenders (the g) aren't clipped by the reveal mask */
@@ -132,21 +138,22 @@ em { font-family: var(--serif); font-style: italic; font-weight: 300; }
   display: inline-block; transform: translateY(110%);
   animation: rise 1.5s var(--ease) forwards; animation-delay: var(--rd, 0s);
 }
-.mask--right { text-align: right; }
-.mask--right em { color: var(--sage); padding-right: 0.04em; }
+/* 'soon.' starts on the same vertical line as the sign-up column */
+.mask--right { padding-left: calc(50% + var(--col-gap) / 2 + 0.045em); }
+.mask--right em { color: var(--sage); }
 @keyframes rise { to { transform: none; } }
 
 .bottom {
   display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: clamp(28px, 5vw, 96px); align-items: end;
-  margin-top: clamp(28px, 6vh, 80px);
-  padding-top: clamp(24px, 3vh, 36px);
+  gap: var(--col-gap); align-items: end;
+  margin-top: clamp(20px, 4svh, 64px);
+  padding-top: clamp(18px, 2.6svh, 32px);
   border-top: 1px solid var(--hair);
 }
 .tagline__big { margin: 0; font-family: var(--serif); font-weight: 300; font-size: clamp(24px, 2.4vw, 36px); line-height: 1.15; }
 .tagline__small { margin: 14px 0 0; color: var(--soft); max-width: 30em; font-size: 15px; }
 
-.signup { justify-self: end; width: 100%; max-width: 520px; }
+.signup { width: 100%; }
 .signup__label { margin: 0 0 14px; color: var(--soft); font-size: 14px; }
 
 .countdown { display: flex; gap: clamp(18px, 2.4vw, 34px); margin-bottom: 22px; }
@@ -185,16 +192,19 @@ em { font-family: var(--serif); font-style: italic; font-weight: 300; }
 .notify__msg.is-error { color: #e0a17c; }
 
 .footer {
-  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 28px;
-  padding: 22px var(--pad) 28px;
-  font-size: 11.5px; letter-spacing: .18em; text-transform: uppercase; color: var(--soft);
+  /* same two columns as .bottom, so the footer line sits on the 'soon.' / sign-up axis */
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  column-gap: var(--col-gap); row-gap: 8px; align-items: center;
+  padding: clamp(14px, 2.4svh, 22px) var(--pad) clamp(18px, 3svh, 28px);
+  font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--soft);
 }
-.services { display: flex; flex-wrap: wrap; gap: 8px 22px; list-style: none; margin: 0; padding: 0; }
-.services li { display: inline-flex; align-items: center; gap: 22px; }
-.services li + li::before { content: "✦"; font-size: 8px; color: var(--gold); margin-left: -22px; margin-right: 0; transform: translateX(-11px); }
-.footer__line { margin: 0; text-transform: none; letter-spacing: 0; font-family: var(--serif); font-size: 16px; color: var(--cream); }
+.services { grid-column: 1; grid-row: 1; display: flex; flex-wrap: wrap; gap: 4px 10px; list-style: none; margin: 0; padding: 0; letter-spacing: .12em; }
+.services li { display: inline-flex; align-items: center; white-space: nowrap; }
+/* separator trails each item, so a wrapped line never starts with a star */
+.services li:not(:last-child)::after { content: "✦"; font-size: 7px; color: var(--gold); margin-left: 10px; }
+.footer__line { grid-column: 2; grid-row: 1 / span 2; margin: 0; text-transform: none; letter-spacing: 0; font-family: var(--serif); font-size: 16px; color: var(--cream); }
 .footer__line em { color: var(--sage); }
-.footer__copy { margin: 0; }
+.footer__copy { grid-column: 1; grid-row: 2; margin: 0; }
 
 .fade { opacity: 0; transform: translateY(16px); animation: fade 1.2s var(--ease) forwards; animation-delay: var(--fd, 0s); }
 @keyframes fade { to { opacity: 1; transform: none; } }
@@ -202,7 +212,12 @@ em { font-family: var(--serif); font-style: italic; font-weight: 300; }
 /* ---------- responsive ---------- */
 @media (max-width: 900px) {
   .bottom { grid-template-columns: 1fr; }
-  .signup { justify-self: start; max-width: none; }
+  .footer { grid-template-columns: 1fr; }
+  .services, .footer__line, .footer__copy { grid-column: 1; grid-row: auto; }
+  .footer__line { order: -1; }
+  /* single column: the heading shrink-wraps 'Coming', and 'soon.' ends flush with its g */
+  .giant { width: fit-content; }
+  .mask--right { padding-left: 0; text-align: right; }
   .plant { right: -18vw; height: 78vh; opacity: .7; }
 }
 @media (max-width: 560px) {
@@ -214,7 +229,6 @@ em { font-family: var(--serif); font-style: italic; font-weight: 300; }
   .notify input[type="email"] { padding: 12px 14px; }
   .notify button { justify-content: center; }
   .notify__msg { margin-left: 8px; }
-  .footer { flex-direction: column; align-items: flex-start; }
 }
 
 @media (prefers-reduced-motion: reduce) {
