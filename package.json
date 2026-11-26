@@ -7,7 +7,9 @@
   "type": "commonjs",
   "scripts": {
     "start": "node server.js",
-    "dev": "node --watch server.js"
+    "dev": "node --watch server.js",
+    "deploy": "wrangler deploy",
+    "cf:dev": "wrangler dev"
   },
   "engines": {
     "node": ">=18"
@@ -15,5 +17,8 @@
   "dependencies": {
     "compression": "^1.7.4",
     "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "wrangler": "^4.168.0"
   }
 }

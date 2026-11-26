@@ -1,0 +1,23 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "baaghbani-co",
+  "account_id": "7643492cc224f3df90740d2c4fc409ba",
+  "main": "worker/index.js",
+  "compatibility_date": "2025-09-01",
+  "workers_dev": true,
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/*", "/healthz"],
+    "not_found_handling": "single-page-application"
+  },
+  "kv_namespaces": [
+    { "binding": "SUBSCRIBERS", "id": "78c402c4584147e48cbb28442d5dc40a" }
+  ],
+  "vars": {
+    // ISO date, e.g. "2027-01-15T10:00:00+05:30". Empty hides the countdown.
+    "LAUNCH_DATE": "",
+    "INSTAGRAM_URL": "https://www.instagram.com/"
+  },
+  "observability": { "enabled": true }
+}

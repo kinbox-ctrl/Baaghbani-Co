@@ -14,6 +14,23 @@ npm run dev        # restarts on file changes
 
 Requires Node 18 or newer.
 
+## Deploy (Cloudflare Workers)
+
+Live at **https://baaghbani-co.kartik-kinbox.workers.dev** (Worker `baaghbani-co`).
+
+```bash
+npx wrangler login   # once
+npm run deploy       # wrangler deploy
+```
+
+On Cloudflare, `worker/index.js` replaces `server.js`. It serves `public/` as static assets and handles `/api/config` and `/api/subscribe`. Sign-ups go into the KV namespace `baaghbani-subscribers` (binding `SUBSCRIBERS`, keys `email:<address>`). To see them:
+
+```bash
+npx wrangler kv key list --namespace-id 78c402c4584147e48cbb28442d5dc40a --remote --prefix email:
+```
+
+`LAUNCH_DATE` and `INSTAGRAM_URL` are set under `vars` in `wrangler.jsonc`; edit them and run `npm run deploy` again. `future-site/` is never uploaded.
+
 ## Configuration (environment variables)
 
 | Variable        | Default                       | Purpose                                                                 |
